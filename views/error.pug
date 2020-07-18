@@ -1,5 +1,6 @@
-extends layout
+extends layout.pug
 
 block content
-  h1 Server Error
-  p Sorry! There was an unexpected error on the server.
+     h1 Server Error
+     p(class='errorMessage') Sorry! There was an unexpected error on the server
+     a(class='back' href='/') ← Back

@@ -1,0 +1,50 @@
+extends layout.pug
+
+block content
+     include errors
+     h2(class='title') New Book
+     div
+        form(action="/books", method="post")
+            p 
+                label(for="title") Book title
+                input(
+                    name="title"
+                    type="text"
+                    id="title"
+                    placeholder="Book title"
+                    value= book.title
+                )   
+            p 
+                label(for="author") Author
+                input(
+                    name="author"
+                    type="text"
+                    id="author"
+                    placeholder="Author"
+                    value= book.author
+                )
+            p 
+                label(for="genre") Genre
+                input(
+                    name="genre"
+                    type="text"
+                    id="genre"
+                    placeholder="Genre"
+                    value= book.genre
+                )
+            p 
+                label(for="year") Publishing Year
+                input(
+                    name="year"
+                    type="text"
+                    id="year"
+                    placeholder="Publishing Year"
+                    value= book.year
+                )   
+            p
+                input(
+                    type="submit"
+                    value="Submit"
+                    class="submit")
+            p
+                a(class="cancel" href="/") Cancel
