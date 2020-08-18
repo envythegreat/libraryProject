@@ -1,21 +1,5 @@
-extends layout.pug
+extends layout
 
 block content
-
-    div(class='createBtnDiv')            
-        a(href='/books/new' class='createBtn') CREATE NEW BOOK
-    table
-            thead
-                tr
-                    th Title
-                    th Author
-                    th Genre
-                    th Year 
-                tbody
-                    each book in books
-                        tr
-                            td
-                                a(class='bookLinks' href="/books/" + book.id)= book.title
-                                td= book.author
-                                td= book.genre
-                                td= book.year 
+  h1= title
+  p Welcome to #{title}

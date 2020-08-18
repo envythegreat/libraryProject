@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  div
+    h1= `Server Error`
+    h2= `Error status code: ${err.status} - Server Error`
+    p= ` ${err.message}`
+
+    a(href=`/`) Home
+
+    div
+      hr  
+      p= `The stack trace: `
+      p= err.stack
