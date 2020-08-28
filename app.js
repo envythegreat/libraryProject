@@ -1,44 +1,50 @@
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./routes/index');
+const books = require('./routes/books');
+const { sequelize } = require('./models/');
 
-let indexRouter = require('./routes/index');
-let booksRouter = require('./routes/books');
+//create port number
+const port = process.env.PORT || 3000;
 
-let app = express();
+//create app variable
+const app = express();
 
-// view engine setup
 
-app.set('views', path.join(__dirname, 'views'));
+//set up static routes
+app.use('/static', express.static('public'));
+
+//set up view engine
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//use body-parser
+app.use(bodyParser.urlencoded({ extended: false }));
 
-
-app.use('/', indexRouter);
-app.use('/books', booksRouter);
-
+//routes
+app.use('/', routes);
+app.use('/books', books);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    const err = new Error();
+    err.status = 404;
+    err.message = "- Sorry, this page does not exist"
+    res.render('page-not-found');
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.status(err.status || 500);
+    res.render('error');
 });
+
+//set up port listener and sync
+sequelize.sync()
+    .then(() => {
+        app.listen(port, () => console.log('The application is running on port 3000!'));
+    });
 
 module.exports = app;
