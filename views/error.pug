@@ -1,6 +1,9 @@
-extends layout
+extends layout.pug
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  h1 Oops! Bad News!
+  p It looks like the book requested doesn't exist!
+  
+  br
+  p
+    a(href="/books") Home

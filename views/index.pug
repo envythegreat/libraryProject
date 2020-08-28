@@ -1,5 +1,29 @@
-extends layout
+extends layout.pug
 
 block content
   h1= title
-  p Welcome to #{title}
+  form(action="/books/search", method="post")
+    input(name="search", type="text",  id="search-field")
+    input(type="submit", value="Submit Search", id="search-submit")
+    if notAllBooksFound
+      include ./includes/show-all-books-button.pug
+  p
+    a(class="button", href="/books/new") Create New Book
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+      if books
+        each book in books
+          tr
+            td
+              a(href="/books/" + book.id)= book.title
+            td= book.author
+            td= book.genre
+            td= book.year
+  if pagesIndexes
+    include ./includes/page-links.pug
